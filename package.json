@@ -4,9 +4,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js --ENV LOCAL",
+    "dev": "ENV=LOCAL nodemon index.js",
     "build": "npm install",
-    "lint": "./node_modules/.bin/standard"
+    "lint": "./node_modules/.bin/standard",
+    "test": "ENV=TEST ./node_modules/.bin/mocha --exit --timeout 30000",
+    "apidocs": "node_modules/apidoc/bin/apidoc -i app/ -o docs/"
   },
   "author": "LiorRabin",
   "license": "MIT",
@@ -15,16 +17,30 @@
     "@colucom/osseus-logger": "~0.5.1",
     "@colucom/osseus-mongo": "~0.3.1",
     "@colucom/osseus-router": "~0.4.1",
-    "@colucom/osseus-server": "~0.2.1"
+    "@colucom/osseus-server": "~0.2.1",
+    "ipfs-http-client": "^28.1.0"
   },
   "devDependencies": {
+    "apidoc": "^0.17.7",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "mocha": "^5.2.0",
     "standard": "^11.0.1"
   },
   "standard": {
+    "env": [
+      "mocha"
+    ],
     "ignore": [
       "/docs/*",
-      "/migrations/*",
       "/test/*"
     ]
   },
+  "apidoc": {
+    "title": "IPFS Proxy API",
+    "header": {
+      "title": "README",
+      "filename": "README.md"
+    }
+  }
 }

@@ -1,0 +1,30 @@
+{
+  "/metadata": {
+    "POST": {
+      "route": "create",
+      "jwt": true,
+      "validators": {
+        "body": {
+          "data": {
+            "notEmpty": true,
+            "errorMessage": "is missing"
+          }
+        }
+      }
+    }
+  },
+  "/metadata/:hash": {
+    "GET": {
+      "route": "get",
+      "jwt": true,
+      "validators": {
+        "params": {
+          "hash": {
+            "notEmpty": true,
+            "errorMessage": "is missing"
+          }
+        }
+      }
+    }
+  }
+}

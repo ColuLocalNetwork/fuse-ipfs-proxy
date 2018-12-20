@@ -9,9 +9,10 @@ The Fuse IPFS proxy is an [osseus](https://github.com/colucom/osseus) based serv
 To make sure that the following instructions work, please install the following dependencies
 on you machine:
 
-- Node.js (comes with a bundled npm)
-- Git
-- MongoDB
+- [Node.js (comes with a bundled npm)](https://nodejs.org/en/)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [MongoDB](https://www.mongodb.com/download-center/community)
+- [IPFS](https://docs.ipfs.io/introduction/install/)
 
 ## Installation
 
