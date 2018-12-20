@@ -15,14 +15,20 @@ module.exports = (osseus) => {
 
   metadata.create = (data) => {
     return new Promise(async (resolve, reject) => {
+      let hash
       try {
         const filesAdded = await ipfs.add(Buffer.from(JSON.stringify(data)))
-        const hash = filesAdded[0].hash
+        hash = filesAdded[0].hash
         const md = await osseus.db_models.metadata.create({hash: hash, data: data})
         resolve(md)
       } catch (err) {
-        osseus.logger.error(`Could not create ${data}`, err)
-        reject(err)
+        if (err.name === 'MongoError' && err.code === 11000) {
+          osseus.logger.debug(`'${hash}' already exists in DB`)
+          resolve({hash: hash, data: data})
+        } else {
+          osseus.logger.error(`Could not create ${data}`, err)
+          reject(err)
+        }
       }
     })
   }
@@ -30,18 +36,20 @@ module.exports = (osseus) => {
   metadata.get = (hash) => {
     return new Promise(async (resolve, reject) => {
       try {
-        osseus.logger.silly(`Trying to get '${hash}' from IPFS`)
+        osseus.logger.debug(`Trying to get '${hash}' from IPFS`)
         let md = await Promise.race([
           ipfs.cat(hash),
           later(osseus.config.ipfs_timeout || 5000)
-        ])
+        ]).catch(err => {
+          osseus.logger.error(`Could not get '${hash}' from IPFS`, err)
+        })
         if (md) {
-          osseus.logger.silly(`Got '${hash}' from IPFS`)
+          osseus.logger.debug(`Got '${hash}' from IPFS`)
           return resolve({hash: hash, data: JSON.parse(md.toString())})
         } else {
-          osseus.logger.silly(`Could not get '${hash}' from IPFS - Trying from DB`)
+          osseus.logger.debug(`Could not get '${hash}' from IPFS - Trying from DB`)
           md = await osseus.db_models.metadata.getByHash(hash)
-          osseus.logger.silly(`Got '${hash}' from DB`)
+          osseus.logger.debug(`Got '${hash}' from DB`)
           resolve(md)
         }
       } catch (err) {
