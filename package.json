@@ -5,6 +5,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "ENV=LOCAL nodemon index.js",
+    "qa": "ENV=QA APPLICATION_NAME=IPFS_PROXY nodemon index.js",
+    "prod": "ENV=PRODUCTION APPLICATION_NAME=IPFS_PROXY nodemon index.js",
     "build": "npm install",
     "lint": "./node_modules/.bin/standard",
     "test": "ENV=TEST ./node_modules/.bin/mocha --exit --timeout 30000",

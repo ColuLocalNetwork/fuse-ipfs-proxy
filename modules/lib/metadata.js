@@ -19,6 +19,7 @@ module.exports = (osseus) => {
       try {
         const filesAdded = await ipfs.add(Buffer.from(JSON.stringify(data)))
         hash = filesAdded[0].hash
+        osseus.logger.debug(`'${hash}' created for data: ${JSON.stringify(data)} on IPFS`)
         const md = await osseus.db_models.metadata.create({hash: hash, data: data})
         resolve(md)
       } catch (err) {
@@ -26,7 +27,7 @@ module.exports = (osseus) => {
           osseus.logger.debug(`'${hash}' already exists in DB`)
           resolve({hash: hash, data: data})
         } else {
-          osseus.logger.error(`Could not create ${data}`, err)
+          osseus.logger.error(`Could not create ${JSON.stringify(data)}`, err)
           reject(err)
         }
       }
