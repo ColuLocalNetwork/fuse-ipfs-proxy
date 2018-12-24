@@ -1,11 +1,13 @@
 const ipfsClient = require('ipfs-http-client')
 
 module.exports = (osseus) => {
-  const ipfs = ipfsClient({
+  const opts = {
     host: osseus.config.ipfs_host,
     port: osseus.config.ipfs_port,
     protocol: osseus.config.ipfs_protocol
-  })
+  }
+  osseus.logger.debug(`ipfs client configuration: ${JSON.stringify(opts)}`)
+  const ipfs = ipfsClient(opts)
 
   const later = (delay, value) => {
     return new Promise(resolve => setTimeout(resolve, delay, value))
