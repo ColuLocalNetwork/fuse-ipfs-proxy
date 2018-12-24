@@ -34,7 +34,7 @@ This commands installs everything which is required for building and testing the
 
 ## Developing
 ### Run locally: `npm run dev`
-This task will run the application and start listening on port `8080`.
+This task will run the application and start listening on port `3000`.
 
 Under the hood, we use a complete [osseus](https://github.com/colucom/osseus) stack.
 

@@ -4,7 +4,7 @@ module.exports = {
   OSSEUS_MONGO_DEPENDENCIES: ['logger'],
   OSSEUS_MONGO_URI: 'mongodb://localhost/ipfs-proxy-tests',
   OSSEUS_SERVER_DEPENDENCIES: ['logger', 'mongo'],
-  OSSEUS_SERVER_PORT: 8080,
+  OSSEUS_SERVER_PORT: 3000,
   OSSEUS_SERVER_MORGAN_FORMAT: ':date[iso] method=":method", url=":url", statusCode=":status", route=":route", host=":host", client-ip=":client-ip", user-agent=":user-agent", httpVersion=":http-version", responseTime=":response-time"',
   OSSEUS_SERVER_ADD_HEALTHCHECK: true,
   OSSEUS_SERVER_ADD_IS_RUNNING: true,
