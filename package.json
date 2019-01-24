@@ -20,7 +20,8 @@
     "@colucom/osseus-mongo": "~0.3.1",
     "@colucom/osseus-router": "~0.4.1",
     "@colucom/osseus-server": "~0.2.1",
-    "ipfs-http-client": "^28.1.0"
+    "ipfs-http-client": "^28.1.0",
+    "multer": "^1.4.1"
   },
   "devDependencies": {
     "apidoc": "^0.17.7",

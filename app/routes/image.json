@@ -1,0 +1,23 @@
+{
+  "/image": {
+    "POST": {
+      "route": "create",
+      "jwt": true,
+      "policy": "global:upload"
+    }
+  },
+  "/image/:hash": {
+    "GET": {
+      "route": "get",
+      "jwt": true,
+      "validators": {
+        "params": {
+          "hash": {
+            "notEmpty": true,
+            "errorMessage": "is missing"
+          }
+        }
+      }
+    }
+  }
+}

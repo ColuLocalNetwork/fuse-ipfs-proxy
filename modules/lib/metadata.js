@@ -15,11 +15,11 @@ module.exports = (osseus) => {
 
   function metadata () {}
 
-  metadata.create = (data) => {
+  metadata.create = (data, image) => {
     return new Promise(async (resolve, reject) => {
       let hash
       try {
-        const filesAdded = await ipfs.add(Buffer.from(JSON.stringify(data)))
+        const filesAdded = await ipfs.add(image ? data : Buffer.from(JSON.stringify(data)))
         hash = filesAdded[0].hash
         osseus.logger.debug(`'${hash}' created for data: ${JSON.stringify(data)} on IPFS`)
         const md = await osseus.db_models.metadata.create({hash: hash, data: data})
@@ -36,7 +36,7 @@ module.exports = (osseus) => {
     })
   }
 
-  metadata.get = (hash) => {
+  metadata.get = (hash, image) => {
     return new Promise(async (resolve, reject) => {
       try {
         osseus.logger.debug(`Trying to get '${hash}' from IPFS`)
@@ -48,7 +48,7 @@ module.exports = (osseus) => {
         })
         if (md) {
           osseus.logger.debug(`Got '${hash}' from IPFS`)
-          return resolve({hash: hash, data: JSON.parse(md.toString())})
+          return resolve({hash: hash, data: image ? md : JSON.parse(md.toString())})
         } else {
           osseus.logger.debug(`Could not get '${hash}' from IPFS - Trying from DB`)
           md = await osseus.db_models.metadata.getByHash(hash)
